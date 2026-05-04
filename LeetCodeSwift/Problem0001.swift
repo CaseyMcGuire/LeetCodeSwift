@@ -15,24 +15,14 @@ import Foundation
  */
 class Solution {
   func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-    var numToIndices: [Int: [Int]] = [:]
-    for (index, num) in nums.enumerated() {
-      var indices = numToIndices[num] ?? []
-      indices.append(index);
-      numToIndices[num] = indices
-    }
-    
+    var numToIndex = [Int : Int]()
     for (index, num) in nums.enumerated() {
       let remainder = target - num
-      if let indices = numToIndices[remainder] {
-        if remainder != num {
-          return [index, indices[0]]
-        }
-        if remainder == num && indices.count > 1 {
-          return Array(indices[...1])
-        }
+      if let otherIndex = numToIndex[remainder] {
+        return [index, otherIndex]
       }
+      numToIndex[num] = index
     }
-    fatalError("Invalid input")
+    fatalError("No solution found")
   }
 }
